@@ -1,9 +1,11 @@
-from sqlalchemy import func
-
 from aiogram import Router, types, F
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types.message import ContentType
+
+from sqlalchemy import func
+
+from loguru import logger
 
 from src import messages as msg
 from src.common import bot, config
@@ -44,18 +46,20 @@ async def pay_with_card(message: types.Message, state: FSMContext):
             prices=[prices]
         )
         await state.clear()
+
+        logger.success(f"Invoice to {message.from_user.id} has been sent")
     else:
         back_kb = create_return_profile_kb()
         await message.answer(text=msg.wrong_refill_value, reply_markup=back_kb)
 
 
-@router.message(StateFilter(PaymentStates.crypto))
-async def pay_with_crypto(message: types.Message, state: FSMContext):
-    if message.text.isdigit():
-        deposit = int(message.text)
-    else:
-        back_kb = create_return_profile_kb()
-        await message.answer(text=msg.wrong_refill_value, reply_markup=back_kb)
+# @router.message(StateFilter(PaymentStates.crypto))
+# async def pay_with_crypto(message: types.Message, state: FSMContext):
+#     if message.text.isdigit():
+#         deposit = int(message.text)
+#     else:
+#         back_kb = create_return_profile_kb()
+#         await message.answer(text=msg.wrong_refill_value, reply_markup=back_kb)
 
 
 @router.pre_checkout_query(lambda query: True)

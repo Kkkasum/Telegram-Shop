@@ -17,6 +17,7 @@ async def add_user(user: dict) -> None:
                 .values(id=user['id'], username=user['username'], registration_date=func.now(), balance=0)
             await session.execute(stmt)
             await session.commit()
+
             logger.success(f"User {user['id']} has been registered")
 
 
@@ -32,6 +33,8 @@ async def add_order(order: dict) -> None:
             )
         await session.execute(stmt)
         await session.commit()
+
+        logger.success(f"Order by {order['user_id']} has been completed")
 
 
 async def get_user(user_id: int) -> dict:
@@ -105,3 +108,5 @@ async def update_user_balance(user_id: int, balance: float) -> None:
             .values(balance=balance)
         await session.execute(stmt)
         await session.commit()
+
+        logger.success(f"User {user_id} balance has been updated")
