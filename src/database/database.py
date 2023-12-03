@@ -49,6 +49,16 @@ async def get_user(user_id: int) -> dict:
     return user
 
 
+async def get_user_balance(user_id: int) -> float:
+    async with async_session_maker() as session:
+        query = select(User.balance)\
+            .where(User.id == user_id)
+        result = await session.execute(query)
+        result = result.scalar()
+
+    return result
+
+
 async def get_categories() -> list:
     async with async_session_maker() as session:
         query = select(Category.id, Category.category)

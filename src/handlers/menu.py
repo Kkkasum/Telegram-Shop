@@ -1,11 +1,9 @@
 from aiogram import Router, types, F
 from aiogram.filters import CommandStart, Command
-from aiogram.fsm.context import FSMContext
 
 from src import messages as msg
 from src.database import get_user, add_user
 from src.keyboards import (
-    MenuCallbackFactory,
     menu_kb,
     create_profile_kb,
     create_categories_kb
@@ -50,24 +48,3 @@ async def catalog(message: types.Message):
     categories_kb = await create_categories_kb()
 
     await message.answer(text=msg.catalog_msg, reply_markup=categories_kb)
-
-
-@router.callback_query(MenuCallbackFactory.filter())
-async def callback_menu(callback: types.CallbackQuery, callback_data: MenuCallbackFactory, state: FSMContext):
-    if callback_data.page == 'profile':
-        await state.clear()
-        user = await get_user(callback.from_user.id)
-        profile_kb = create_profile_kb()
-        m = msg.profile_msg.format(
-            username=callback.from_user.username,
-            user_id=callback.from_user.id,
-            registration_date=user['registration_date'],
-            balance=user['balance']
-        )
-
-        await callback.message.edit_text(text=m, reply_markup=profile_kb)
-
-    if callback_data.page == 'catalog':
-        categories_kb = await create_categories_kb()
-
-        await callback.message.edit_text(text=msg.catalog_msg, reply_markup=categories_kb)

@@ -1,14 +1,11 @@
 import cryptocompare
 
 
-fiat = 'RUB'
-currency = ['USDT', 'BUSD', 'USDC', 'BTC', 'ETH', 'TON', 'BNB']
-
-
 def get_currencies() -> list:
     interest = 1.03
+    tokens = ['USDT', 'BUSD', 'USDC', 'BTC', 'ETH', 'TON']
 
-    cur = [cryptocompare.get_price(fiat, i)[fiat] for i in currency]
-    currencies_rate = [i[j] * interest for i, j in zip(cur, currency)]
+    rates = [cryptocompare.get_price('RUB', i)['RUB'] for i in tokens]
+    tokens_rate = [i[j] * interest for i, j in zip(rates, tokens)]
 
-    return currencies_rate
+    return tokens_rate
