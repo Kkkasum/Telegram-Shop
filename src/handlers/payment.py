@@ -7,7 +7,8 @@ from sqlalchemy import func
 
 from loguru import logger
 
-from src import messages as msg
+from src.utils import messages as msg
+from src.utils.formaters import format_succeed_payment
 from src.common import bot, config
 from src.states import PaymentStates
 from src.database import add_order, update_user_balance, get_user_balance
@@ -72,10 +73,7 @@ async def successful_payment(message: types.Message):
     deposit = message.successful_payment.total_amount / 100
     user_balance = await get_user_balance(message.from_user.id)
     user_balance += deposit
-    m = msg.successful_payment.format(
-        deposit=deposit,
-        currency=message.successful_payment.currency
-    )
+    m = format_succeed_payment(deposit, message.successful_payment.currency)
 
     await message.answer(text=m)
     await add_order({

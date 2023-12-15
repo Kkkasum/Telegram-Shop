@@ -1,7 +1,8 @@
 from aiogram import Router, types, F
 from aiogram.filters import CommandStart, Command
 
-from src import messages as msg
+from src.utils import messages as msg
+from src.utils.formaters import format_start, format_profile
 from src.database import get_user, add_user
 from src.keyboards import (
     menu_kb,
@@ -15,7 +16,7 @@ router = Router()
 
 @router.message(CommandStart())
 async def start(message: types.Message):
-    m = msg.start_msg.format(username=message.from_user.username)
+    m = format_start(message.from_user.username)
 
     await add_user({'id': message.from_user.id, 'username': message.from_user.username})
     await message.answer(text=m, reply_markup=menu_kb)
@@ -26,12 +27,7 @@ async def start(message: types.Message):
 async def profile(message: types.Message):
     profile_kb = create_profile_kb()
     user = await get_user(message.from_user.id)
-    m = msg.profile_msg.format(
-        username=message.from_user.username,
-        user_id=message.from_user.id,
-        registration_date=user['registration_date'],
-        balance=user['balance']
-    )
+    m = format_profile(message.from_user.username, message.from_user.id, user['registration_date'], user['balance'])
 
     await message.answer(text=m, reply_markup=profile_kb)
 

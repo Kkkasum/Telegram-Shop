@@ -93,8 +93,8 @@ async def get_item_by_id(item_id: int) -> dict:
 
 async def get_user_purchases(user_id: int) -> list:
     async with async_session_maker() as session:
-        query = select(Order.order_date, Order.item_name, Order.price)\
-            .where(Order.user_id == user_id)
+        query = select(Order.item_name, Order.order_date, Order.price)\
+            .where(Order.user_id == user_id, Order.order_type != 'refill')
         result = await session.execute(query)
         result = result.all()
 
