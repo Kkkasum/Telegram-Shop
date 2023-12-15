@@ -1,12 +1,13 @@
 from datetime import datetime
 
-from src.utils.formaters import (
+from src.utils.formatters import (
     format_start,
     format_profile,
     format_succeed_payment,
     format_purchases,
     format_item,
     format_buying_item,
+    format_crypto_invoice,
     format_succeed_purchase,
     format_cancelled_purchase
 )
@@ -80,6 +81,15 @@ def test_format_buying_item() -> None:
     assert res == "<b>Вы действительно хотите купить этот товар?</b>\n\n" \
                   "<b>🛒 Товар</b>: Item\n" \
                   "<b>💰 Сумма к оплате:</b> 100"
+
+
+def test_format_crypto_invoice() -> None:
+    res = format_crypto_invoice(
+        invoice_url='url'
+    )
+
+    assert res == f'Для пополнения баланса перейдите по <a href="url">ссылке</a>\n'\
+                         f'После оплаты нажмите на <b>Проверить оплату</b>'
 
 
 def test_format_succeed_purchase() -> None:

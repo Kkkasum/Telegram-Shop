@@ -6,7 +6,11 @@ from ._profile_kb import (
 )
 from ._payment_kb import (
     PaymentCallbackFactory,
-    create_refill_methods_kb
+    AssetCallbackFactory,
+    InvoiceCallbackFactory,
+    create_refill_methods_kb,
+    create_rates_kb,
+    create_crypto_invoice_kb
 )
 from ._catalog_kb import (
     CatalogCallbackFactory,

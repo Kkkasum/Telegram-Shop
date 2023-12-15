@@ -6,7 +6,8 @@ from ..constants import BASE_DIR
 class Config(BaseSettings):
     BOT_TOKEN: str
     PAYMASTER_TOKEN: str
-    REDIS_URL: str
+    CRYPTO_BOT_TOKEN: str
+
     PG_HOST: str
     PG_PORT: str
     PG_NAME: str

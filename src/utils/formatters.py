@@ -19,7 +19,14 @@ def format_profile(username: str, user_id: int, registration_date: datetime, bal
     return profile_msg
 
 
-def format_succeed_payment(deposit: float, currency: str) -> str:
+def format_crypto_invoice(invoice_url: str) -> str:
+    crypto_invoice_msg = f'Для пополнения баланса перейдите по <a href="{invoice_url}">ссылке</a>\n'\
+                         f'После оплаты нажмите на <b>Проверить оплату</b>'
+
+    return crypto_invoice_msg
+
+
+def format_succeed_payment(deposit: float, currency: str = 'RUB') -> str:
     successful_payment_msg = f"✅ Пополнение на сумму {deposit} {currency} прошло успешно"
 
     return successful_payment_msg
