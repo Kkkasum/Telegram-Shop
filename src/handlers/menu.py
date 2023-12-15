@@ -2,7 +2,7 @@ from aiogram import Router, types, F
 from aiogram.filters import CommandStart, Command
 
 from src.utils import messages as msg
-from src.utils.formaters import format_start, format_profile
+from src.utils.formatters import format_start, format_profile
 from src.database import get_user, add_user
 from src.keyboards import (
     menu_kb,

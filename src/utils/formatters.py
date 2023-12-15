@@ -2,10 +2,10 @@ from datetime import datetime
 
 
 def format_start(username: str) -> str:
-    start_msg = f"🌕 Добро пожаловать, {username} \n\n" \
-                f"🌖 Бот работает в штатном режиме \n" \
-                f"🌗 Если не появились вспомогательные кнопки \n" \
-                f"🌘 Введите /start \n\n"
+    start_msg = f"🌕 Добро пожаловать, {username}\n\n" \
+                f"🌖 Бот работает в штатном режиме\n" \
+                f"🌗 Если не появились вспомогательные кнопки\n" \
+                f"🌘 Введите /start\n\n"
 
     return start_msg
 
@@ -19,7 +19,14 @@ def format_profile(username: str, user_id: int, registration_date: datetime, bal
     return profile_msg
 
 
-def format_succeed_payment(deposit: float, currency: str) -> str:
+def format_crypto_invoice(invoice_url: str) -> str:
+    crypto_invoice_msg = f'Для пополнения баланса перейдите по <a href="{invoice_url}">ссылке</a>\n'\
+                         f'После оплаты нажмите на <b>Проверить оплату</b>'
+
+    return crypto_invoice_msg
+
+
+def format_succeed_payment(deposit: float, currency: str = 'RUB') -> str:
     successful_payment_msg = f"✅ Пополнение на сумму {deposit} {currency} прошло успешно"
 
     return successful_payment_msg
@@ -59,7 +66,7 @@ def format_succeed_purchase(item_name: str, price: float, username: str, user_id
     return succeed_purchase_msg
 
 
-def format_cancelled_purchase(user_balance: float):
+def format_cancelled_purchase(user_balance: float) -> str:
     cancelled_purchase_msg = f"❗ <b>У вас недостаточно средств на счету</b>\n" \
                              f"Ваш баланс: {user_balance}"
 

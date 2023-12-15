@@ -3,7 +3,7 @@ from sqlalchemy import func
 from aiogram import Router, types
 
 from src.utils import messages as msg
-from src.utils.formaters import format_item, format_buying_item, format_succeed_purchase, format_cancelled_purchase
+from src.utils.formatters import format_item, format_buying_item, format_succeed_purchase, format_cancelled_purchase
 from src.database import get_user, get_item_by_id, add_order, update_user_balance
 from src.keyboards import (
     CatalogCallbackFactory,

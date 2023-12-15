@@ -3,7 +3,7 @@ from aiogram.fsm.context import FSMContext
 
 from src.database import get_user, get_user_purchases
 from src.utils import messages as msg
-from src.utils.formaters import format_profile, format_purchases
+from src.utils.formatters import format_profile, format_purchases
 from src.keyboards import (
     ProfileCallbackFactory,
     create_profile_kb,
