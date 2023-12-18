@@ -4,7 +4,6 @@ from src.utils.formatters import (
     format_start,
     format_profile,
     format_succeed_payment,
-    format_purchases,
     format_item,
     format_buying_item,
     format_crypto_invoice,
@@ -45,18 +44,6 @@ def test_format_succeed_payment() -> None:
     )
 
     assert res == "✅ Пополнение на сумму 1000 RUB прошло успешно"
-
-
-def test_format_purchases() -> None:
-    res = format_purchases(
-        item_name='Item',
-        order_date=datetime(day=1, month=1, year=2023),
-        price=100
-    )
-
-    assert res == "🛒 Товар: Item\n" \
-                  "🕑 Дата покупки: 01/01/2023\n" \
-                  "💰 Цена: 100\n\n"
 
 
 def test_format_item() -> None:

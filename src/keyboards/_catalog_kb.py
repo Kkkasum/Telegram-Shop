@@ -56,7 +56,7 @@ def create_buy_kb(item_name: str, price: float) -> InlineKeyboardMarkup:
     )
     builder.button(
         text='⬅️ Вернуться',
-        callback_data=CatalogCallbackFactory(action='show', page='catalog')
+        callback_data=CatalogCallbackFactory(action='return', page='catalog')
     )
 
     return builder.as_markup()
@@ -70,7 +70,7 @@ def create_purchase_kb(item_name: str, price: float) -> InlineKeyboardMarkup:
     )
     builder.button(
         text='❌ Отменить',
-        callback_data=CatalogCallbackFactory(action='show', page='catalog')
+        callback_data=CatalogCallbackFactory(action='cancel', page='catalog')
     )
 
     return builder.as_markup()
@@ -80,7 +80,7 @@ def create_cancelled_purchase_kb() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     builder.button(
         text='💰 Пополнить баланс',
-        callback_data=PaymentCallbackFactory(action='show', page='refill')
+        callback_data=PaymentCallbackFactory(action='refill', page='refill')
     )
     builder.button(
         text='⬅️ Вернуться',

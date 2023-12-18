@@ -4,23 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3259986d-2a4d-4770-8ce8-734445bd1f6f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/_bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/_bot_init.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/_logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/_logger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/_database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handlers/catalog.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/catalog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handlers/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handlers/payment.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/payment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handlers/profile.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/profile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/keyboards/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyboards/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/keyboards/_catalog_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyboards/_catalog_kb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/keyboards/_payment_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyboards/_payment_kb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/keyboards/_profile_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyboards/_profile_kb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/formatters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/formatters.py" afterDir="false" />
-    </list>
+    <list default="true" id="3259986d-2a4d-4770-8ce8-734445bd1f6f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
