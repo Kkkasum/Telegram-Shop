@@ -3,7 +3,7 @@ from aiogram.filters import CommandStart, Command
 
 from src.utils import messages as msg
 from src.utils.formatters import format_start, format_profile
-from src.database import get_user, add_user
+from src.database import get_user, add_user, get_categories
 from src.keyboards import (
     menu_kb,
     create_profile_kb,
@@ -41,6 +41,7 @@ async def help(message: types.Message):
 @router.message(Command('catalog'))
 @router.message(F.text.casefold() == 'каталог')
 async def catalog(message: types.Message):
-    categories_kb = await create_categories_kb()
+    categories = await get_categories()
+    categories_kb = create_categories_kb(categories)
 
     await message.answer(text=msg.catalog_msg, reply_markup=categories_kb)

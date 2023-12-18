@@ -13,10 +13,18 @@ def format_start(username: str) -> str:
 def format_profile(username: str, user_id: int, registration_date: datetime, balance: float) -> str:
     profile_msg = f"👤 <b>Логин:</b> @{username}\n" \
                   f"🔑 <b>ID:</b> {user_id}\n" \
-                  f"🕑 <b>Регистрация:</b> {registration_date}\n\n" \
+                  f"🕑 <b>Регистрация:</b> {registration_date.strftime('%d/%m/%Y')}\n\n" \
                   f"💲 <b>Баланс:</b> {balance}"
 
     return profile_msg
+
+
+def format_order(order_id: int, item_name: str, order_date: datetime) -> str:
+    order_msg = f"Номер заказа: {order_id}\n"\
+                f"Товар: {item_name}\n"\
+                f"Дата покупки: {order_date.strftime('%d/%m/%Y')}"\
+
+    return order_msg
 
 
 def format_crypto_invoice(invoice_url: str) -> str:
@@ -30,14 +38,6 @@ def format_succeed_payment(deposit: float, currency: str = 'RUB') -> str:
     successful_payment_msg = f"✅ Пополнение на сумму {deposit} {currency} прошло успешно"
 
     return successful_payment_msg
-
-
-def format_purchases(item_name: str, order_date: datetime, price: float) -> str:
-    purchases_msg = f"🛒 Товар: {item_name}\n" \
-                    f"🕑 Дата покупки: {order_date.strftime('%d/%m/%Y')}\n" \
-                    f"💰 Цена: {price}\n\n"
-
-    return purchases_msg
 
 
 def format_item(name: str, price: float, description: str) -> str:

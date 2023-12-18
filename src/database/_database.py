@@ -15,8 +15,9 @@ async def add_user(user: dict) -> None:
         async with async_session_maker() as session:
             query = select(User.id, User.registration_date, User.balance).where(User.id == user['id'])
             result = await session.execute(query)
+            result = result.scalar()
 
-            if not result.scalar():
+            if not result:
                 stmt = insert(User)\
                     .values(id=user['id'], username=user['username'], registration_date=func.now(), balance=0)
                 await session.execute(stmt)
@@ -48,14 +49,9 @@ async def get_user(user_id: int) -> dict:
         query = select(User.registration_date, User.balance)\
             .where(User.id == user_id)
         result = await session.execute(query)
-        result = result.first()
+        result = result.first()._asdict()
 
-    user = {
-        'registration_date': result[0].strftime('%d/%m/%Y'),
-        'balance': float(result[1])
-    }
-
-    return user
+    return result
 
 
 async def get_user_balance(user_id: int) -> float:
@@ -68,7 +64,7 @@ async def get_user_balance(user_id: int) -> float:
     return result
 
 
-async def get_categories() -> list:
+async def get_categories() -> list[tuple]:
     async with async_session_maker() as session:
         query = select(Category.id, Category.category)
         result = await session.execute(query)
@@ -77,7 +73,7 @@ async def get_categories() -> list:
     return result
 
 
-async def get_items_by_category(category_id: int) -> list:
+async def get_items_by_category(category_id: int) -> list[tuple]:
     async with async_session_maker() as session:
         query = select(Item.id, Item.item_name)\
             .where(Item.category_id == category_id)
@@ -97,12 +93,22 @@ async def get_item_by_id(item_id: int) -> dict:
     return result
 
 
-async def get_user_purchases(user_id: int) -> list:
-    async with async_session_maker() as session:
-        query = select(Order.item_name, Order.order_date, Order.price)\
+async def get_user_orders_ids(user_id: int) -> list[int]:
+    async with (async_session_maker() as session):
+        query = select(Order.id)\
             .where(Order.user_id == user_id, Order.order_type != 'refill')
         result = await session.execute(query)
-        result = result.all()
+        result = result.scalars().all()
+
+    return result
+
+
+async def get_order_by_id(order_id: int) -> dict:
+    async with async_session_maker() as session:
+        query = select(Order.item_name, Order.order_date, Order.price)\
+            .where(Order.id == order_id)
+        result = await session.execute(query)
+        result = result.first()._asdict()
 
     return result
 
