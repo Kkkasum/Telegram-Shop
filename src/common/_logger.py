@@ -1,5 +1,6 @@
-import loguru
+from typing import Callable
 
+import loguru
 from loguru import logger
 
 from ..constants import LOGS_DIR
@@ -7,8 +8,8 @@ from ..constants import LOGS_DIR
 
 class Filters:
     @staticmethod
-    def level(level: str):
-        def _wrap(record: 'loguru.Record'):
+    def level(level: str) -> Callable:
+        def _wrap(record: 'loguru.Record') -> bool:
             return record['level'].name == level and not record['extra'].get('logger_name')
 
         return _wrap

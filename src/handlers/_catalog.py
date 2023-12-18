@@ -1,27 +1,25 @@
 from aiogram import Router, types
-
 from sqlalchemy import func
 
-from src.utils import messages as msg
-from src.utils.formatters import format_item, format_buying_item, format_succeed_purchase, format_cancelled_purchase
-from src.database import get_user, get_item_by_id, add_order, update_user_balance, get_categories, get_items_by_category
+from src.database import add_order, get_categories, get_item_by_id, get_items_by_category, get_user, update_user_balance
 from src.keyboards import (
     CatalogCallbackFactory,
-    ItemsCallbackFactory,
     ItemCallbackFactory,
+    ItemsCallbackFactory,
+    create_buy_kb,
+    create_cancelled_purchase_kb,
     create_categories_kb,
     create_items_kb,
-    create_buy_kb,
     create_purchase_kb,
-    create_cancelled_purchase_kb
 )
-
+from src.utils import messages as msg
+from src.utils.formatters import format_buying_item, format_cancelled_purchase, format_item, format_succeed_purchase
 
 router = Router()
 
 
 @router.callback_query(CatalogCallbackFactory.filter())
-async def callback_catalog(callback: types.CallbackQuery, callback_data: CatalogCallbackFactory):
+async def callback_catalog(callback: types.CallbackQuery, callback_data: CatalogCallbackFactory) -> None:
     if callback_data.page == 'catalog':
         categories = await get_categories()
         categories_kb = create_categories_kb(categories)
@@ -34,7 +32,7 @@ async def callback_catalog(callback: types.CallbackQuery, callback_data: Catalog
 
 
 @router.callback_query(ItemsCallbackFactory.filter())
-async def callback_items(callback: types.CallbackQuery, callback_data: ItemsCallbackFactory):
+async def callback_items(callback: types.CallbackQuery, callback_data: ItemsCallbackFactory) -> None:
     item = await get_item_by_id(int(callback_data.id))
     buy_kb = create_buy_kb(item['item_name'], item['price'])
     m = format_item(item['item_name'], item['price'], item['description'])
@@ -43,7 +41,7 @@ async def callback_items(callback: types.CallbackQuery, callback_data: ItemsCall
 
 
 @router.callback_query(ItemCallbackFactory.filter())
-async def callback_item(callback: types.CallbackQuery, callback_data: ItemCallbackFactory):
+async def callback_item(callback: types.CallbackQuery, callback_data: ItemCallbackFactory) -> None:
     if callback_data.page == 'buy_item':
         purchase_kb = create_purchase_kb(callback_data.item_name, callback_data.price)
         m = format_buying_item(callback_data.item_name, callback_data.price)

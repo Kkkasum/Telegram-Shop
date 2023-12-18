@@ -1,21 +1,16 @@
-from aiogram import Router, types, F
-from aiogram.filters import CommandStart, Command
+from aiogram import F, Router, types
+from aiogram.filters import Command, CommandStart
 
+from src.database import add_user, get_categories, get_user
+from src.keyboards import create_categories_kb, create_profile_kb, menu_kb
 from src.utils import messages as msg
-from src.utils.formatters import format_start, format_profile
-from src.database import get_user, add_user, get_categories
-from src.keyboards import (
-    menu_kb,
-    create_profile_kb,
-    create_categories_kb
-)
-
+from src.utils.formatters import format_profile, format_start
 
 router = Router()
 
 
 @router.message(CommandStart())
-async def start(message: types.Message):
+async def start(message: types.Message) -> None:
     m = format_start(message.from_user.username)
 
     await add_user({'id': message.from_user.id, 'username': message.from_user.username})
@@ -24,7 +19,7 @@ async def start(message: types.Message):
 
 @router.message(Command('profile'))
 @router.message(F.text.casefold() == 'профиль')
-async def profile(message: types.Message):
+async def profile(message: types.Message) -> None:
     profile_kb = create_profile_kb()
     user = await get_user(message.from_user.id)
     m = format_profile(message.from_user.username, message.from_user.id, user['registration_date'], user['balance'])
@@ -34,13 +29,13 @@ async def profile(message: types.Message):
 
 @router.message(Command('help'))
 @router.message(F.text.casefold() == 'помощь')
-async def help(message: types.Message):
-    await message.answer(text=msg.help_msg, reply_markup=menu_kb)
+async def rules(message: types.Message) -> None:
+    await message.answer(text=msg.rules_msg, reply_markup=menu_kb)
 
 
 @router.message(Command('catalog'))
 @router.message(F.text.casefold() == 'каталог')
-async def catalog(message: types.Message):
+async def catalog(message: types.Message) -> None:
     categories = await get_categories()
     categories_kb = create_categories_kb(categories)
 

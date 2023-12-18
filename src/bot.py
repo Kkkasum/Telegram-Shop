@@ -1,10 +1,10 @@
 import asyncio
 
 from src.common import bot, dp
-from src.handlers import menu_router, profile_router, payment_router, catalog_router
+from src.handlers import catalog_router, menu_router, payment_router, profile_router
 
 
-async def main():
+async def main() -> None:
     dp.include_router(menu_router)
     dp.include_router(profile_router)
     dp.include_router(payment_router)

@@ -1,8 +1,7 @@
 from datetime import datetime
 
-from sqlalchemy import BIGINT, String, Float, TIMESTAMP, func
-from sqlalchemy.orm import declarative_base, mapped_column, Mapped
-
+from sqlalchemy import BIGINT, TIMESTAMP, Float, String, func
+from sqlalchemy.orm import Mapped, declarative_base, mapped_column
 
 Base = declarative_base()
 

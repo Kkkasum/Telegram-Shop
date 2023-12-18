@@ -1,25 +1,28 @@
 from aiogram import Router, types
 from aiogram.fsm.context import FSMContext
 
-from src.database import get_user, get_user_orders_ids, get_order_by_id
-from src.utils import messages as msg
-from src.utils.formatters import format_profile, format_order
+from src.database import get_order_by_id, get_user, get_user_orders_ids
 from src.keyboards import (
-    ProfileCallbackFactory,
-    OrdersHistoryCallbackFactory,
     OrderCallbackFactory,
+    OrdersHistoryCallbackFactory,
+    ProfileCallbackFactory,
+    create_orders_history_kb,
     create_profile_kb,
     create_refill_methods_kb,
-    create_orders_history_kb,
-    create_return_history_kb
+    create_return_history_kb,
 )
-
+from src.utils import messages as msg
+from src.utils.formatters import format_order, format_profile
 
 router = Router()
 
 
 @router.callback_query(ProfileCallbackFactory.filter())
-async def callback_profile(callback: types.CallbackQuery, callback_data: ProfileCallbackFactory, state: FSMContext):
+async def callback_profile(
+        callback: types.CallbackQuery,
+        callback_data: ProfileCallbackFactory,
+        state: FSMContext
+) -> None:
     if callback_data.page == 'profile':
         await state.clear()
         user = await get_user(callback.from_user.id)
@@ -38,7 +41,7 @@ async def callback_profile(callback: types.CallbackQuery, callback_data: Profile
 
 
 @router.callback_query(OrdersHistoryCallbackFactory.filter())
-async def callback_orders_history(callback: types.CallbackQuery, callback_data: OrdersHistoryCallbackFactory):
+async def callback_orders_history(callback: types.CallbackQuery, callback_data: OrdersHistoryCallbackFactory) -> None:
     orders_ids = await get_user_orders_ids(user_id=callback.from_user.id)
 
     if not orders_ids:
@@ -53,7 +56,7 @@ async def callback_orders_history(callback: types.CallbackQuery, callback_data: 
 
 
 @router.callback_query(OrderCallbackFactory.filter())
-async def callback_order(callback: types.CallbackQuery, callback_data: OrderCallbackFactory):
+async def callback_order(callback: types.CallbackQuery, callback_data: OrderCallbackFactory) -> None:
     if callback_data.action == 'show':
         order = await get_order_by_id(callback_data.order_id)
         m = format_order(callback_data.order_id, order['item_name'], order['order_date'])

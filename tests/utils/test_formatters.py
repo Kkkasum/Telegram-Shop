@@ -1,15 +1,15 @@
 from datetime import datetime
 
 from src.utils.formatters import (
-    format_start,
-    format_profile,
-    format_succeed_payment,
-    format_item,
     format_buying_item,
-    format_order,
+    format_cancelled_purchase,
     format_crypto_invoice,
+    format_item,
+    format_order,
+    format_profile,
+    format_start,
+    format_succeed_payment,
     format_succeed_purchase,
-    format_cancelled_purchase
 )
 
 
@@ -18,10 +18,10 @@ def test_format_start() -> None:
         username='User'
     )
 
-    assert res == f"🌕 Добро пожаловать, User\n\n" \
-                  f"🌖 Бот работает в штатном режиме\n" \
-                  f"🌗 Если не появились вспомогательные кнопки\n" \
-                  f"🌘 Введите /start\n\n"
+    assert res == '🌕 Добро пожаловать, User\n\n' \
+                  '🌖 Бот работает в штатном режиме\n' \
+                  '🌗 Если не появились вспомогательные кнопки\n' \
+                  '🌘 Введите /start\n\n'
 
 
 def test_format_profile() -> None:
@@ -32,10 +32,10 @@ def test_format_profile() -> None:
         balance=0
     )
 
-    assert res == "👤 <b>Логин:</b> @User\n" \
-                  "🔑 <b>ID:</b> 1\n" \
-                  "🕑 <b>Регистрация:</b> 01/01/2023\n\n" \
-                  "💲 <b>Баланс:</b> 0"
+    assert res == '👤 <b>Логин:</b> @User\n'\
+                  '🔑 <b>ID:</b> 1\n'\
+                  '🕑 <b>Регистрация:</b> 01/01/2023\n\n'\
+                  '💲 <b>Баланс:</b> 0'
 
 
 def test_format_succeed_payment() -> None:
@@ -44,7 +44,7 @@ def test_format_succeed_payment() -> None:
         currency='RUB'
     )
 
-    assert res == "✅ Пополнение на сумму 1000 RUB прошло успешно"
+    assert res == '✅ Пополнение на сумму 1000 RUB прошло успешно'
 
 
 def test_format_item() -> None:
@@ -54,10 +54,10 @@ def test_format_item() -> None:
         description='Item description'
     )
 
-    assert res == "<b>Покупка товара</b>\n\n" \
-                  "<b>Название:</b> Item\n" \
-                  "<b>Стоимость:</b> 100\n\n" \
-                  "<b>Описание:</b> \nItem description"
+    assert res == '<b>Покупка товара</b>\n\n'\
+                  '<b>Название:</b> Item\n'\
+                  '<b>Стоимость:</b> 100\n\n'\
+                  '<b>Описание:</b> \nItem description'
 
 
 def test_format_buying_item() -> None:
@@ -66,9 +66,9 @@ def test_format_buying_item() -> None:
         price=100
     )
 
-    assert res == "<b>Вы действительно хотите купить этот товар?</b>\n\n" \
-                  "<b>🛒 Товар</b>: Item\n" \
-                  "<b>💰 Сумма к оплате:</b> 100"
+    assert res == '<b>Вы действительно хотите купить этот товар?</b>\n\n' \
+                  '<b>🛒 Товар</b>: Item\n' \
+                  '<b>💰 Сумма к оплате:</b> 100'
 
 
 def test_format_order() -> None:
@@ -78,9 +78,9 @@ def test_format_order() -> None:
         order_date=datetime(day=1, month=1, year=2023)
     )
 
-    assert res == f"Номер заказа: 1\n"\
-                  f"Товар: Item\n"\
-                  f"Дата покупки: 01/01/2023"\
+    assert res == '<b>Номер заказа:</b> 1\n'\
+                  'Товар: Item\n'\
+                  'Дата покупки: 01/01/2023'\
 
 
 
@@ -89,8 +89,8 @@ def test_format_crypto_invoice() -> None:
         invoice_url='url'
     )
 
-    assert res == f'Для пополнения баланса перейдите по <a href="url">ссылке</a>\n'\
-                         f'После оплаты нажмите на <b>Проверить оплату</b>'
+    assert res == 'Для пополнения баланса перейдите по <a href="url">ссылке</a>\n'\
+                  'После оплаты нажмите на <b>Проверить оплату</b>'
 
 
 def test_format_succeed_purchase() -> None:
@@ -101,16 +101,16 @@ def test_format_succeed_purchase() -> None:
         user_id=1
     )
 
-    assert res == "✅ <b>Покупка прошла успешно</b>\n\n" \
-                  "<b>Товар:</b> Item\n" \
-                  "<b>Сумма покупки:</b> 100\n" \
-                  "<b>Покупатель:</b> @User (1)"
+    assert res == '✅ <b>Покупка прошла успешно</b>\n\n' \
+                  '<b>Товар:</b> Item\n' \
+                  '<b>Сумма покупки:</b> 100\n' \
+                  '<b>Покупатель:</b> @User (1)'
 
 
-def test_format_cancelled_purchase():
+def test_format_cancelled_purchase() -> None:
     res = format_cancelled_purchase(
         user_balance=100
     )
 
-    assert res == "❗ <b>У вас недостаточно средств на счету</b>\n" \
-                  "Ваш баланс: 100"
+    assert res == '❗ <b>У вас недостаточно средств на счету</b>\n' \
+                  'Ваш баланс: 100'

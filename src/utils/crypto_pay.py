@@ -3,7 +3,6 @@ from aiocryptopay.models.invoice import Invoice
 
 from src.common import config
 
-
 crypto = AioCryptoPay(token=config.CRYPTO_BOT_TOKEN, network=Networks.TEST_NET)
 
 
@@ -22,8 +21,8 @@ async def get_crypto_rates(deposit: int) -> dict:
     return rates
 
 
-async def create_invoice(asset, amount) -> Invoice:
-    invoice = await crypto.create_invoice(amount, asset, expires_in=6000)
+async def create_invoice(asset: str, deposit: float) -> Invoice:
+    invoice = await crypto.create_invoice(deposit, asset, expires_in=6000)
 
     return invoice
 

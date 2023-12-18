@@ -1,11 +1,10 @@
-from sqlalchemy import select, insert, update, func
-
 from loguru import logger
+from sqlalchemy import func, insert, select, update
 
 from src.common import redis
 
 from ._engine import async_session_maker
-from ._models import User, Item, Order, Category
+from ._models import Category, Item, Order, User
 
 
 async def add_user(user: dict) -> None:

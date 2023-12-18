@@ -20,7 +20,7 @@ def format_profile(username: str, user_id: int, registration_date: datetime, bal
 
 
 def format_order(order_id: int, item_name: str, order_date: datetime) -> str:
-    order_msg = f"Номер заказа: {order_id}\n"\
+    order_msg = f"<b>Номер заказа:</b> {order_id}\n"\
                 f"Товар: {item_name}\n"\
                 f"Дата покупки: {order_date.strftime('%d/%m/%Y')}"\
 
