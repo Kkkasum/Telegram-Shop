@@ -1,2 +1,2 @@
 from ._models import Base
-from .database import *
+from ._database import *

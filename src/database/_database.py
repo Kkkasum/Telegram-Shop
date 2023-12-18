@@ -2,23 +2,29 @@ from sqlalchemy import select, insert, update, func
 
 from loguru import logger
 
+from src.common import redis
+
 from ._engine import async_session_maker
 from ._models import User, Item, Order, Category
 
 
 async def add_user(user: dict) -> None:
-    async with async_session_maker() as session:
-        query = select(User.id).where(User.id == user['id'])
-        result = await session.execute(query)
-        result = result.scalar()
+    res = await redis.get(name=str(user['id']))
 
-        if not result:
-            stmt = insert(User)\
-                .values(id=user['id'], username=user['username'], registration_date=func.now(), balance=0)
-            await session.execute(stmt)
-            await session.commit()
+    if not res:
+        async with async_session_maker() as session:
+            query = select(User.id, User.registration_date, User.balance).where(User.id == user['id'])
+            result = await session.execute(query)
 
-            logger.success(f"User {user['id']} has been registered")
+            if not result.scalar():
+                stmt = insert(User)\
+                    .values(id=user['id'], username=user['username'], registration_date=func.now(), balance=0)
+                await session.execute(stmt)
+                await session.commit()
+
+                logger.success(f"User {user['id']} has been registered")
+
+        await redis.set(name=str(user['id']), value=1)
 
 
 async def add_order(order: dict) -> None:
