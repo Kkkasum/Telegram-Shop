@@ -15,8 +15,9 @@ async def add_user(user: dict) -> None:
         async with async_session_maker() as session:
             query = select(User.id, User.registration_date, User.balance).where(User.id == user['id'])
             result = await session.execute(query)
+            result = result.scalar()
 
-            if not result.scalar():
+            if not result:
                 stmt = insert(User)\
                     .values(id=user['id'], username=user['username'], registration_date=func.now(), balance=0)
                 await session.execute(stmt)
@@ -97,12 +98,22 @@ async def get_item_by_id(item_id: int) -> dict:
     return result
 
 
-async def get_user_purchases(user_id: int) -> list:
+async def get_user_purchases(user_id: int, limit: int) -> list:
     async with async_session_maker() as session:
-        query = select(Order.item_name, Order.order_date, Order.price)\
-            .where(Order.user_id == user_id, Order.order_type != 'refill')
+        query = select(Order.id)\
+            .where(Order.user_id == user_id, Order.order_type != 'refill').limit(limit)
         result = await session.execute(query)
         result = result.all()
+
+    return result
+
+
+async def get_order_by_id(order_id: int) -> dict:
+    async with async_session_maker() as session:
+        query = select(Order.item_name, Order.order_date, Order.price)\
+            .where(Order.id == order_id)
+        result = await session.execute(query)
+        result = result.first()._asdict()
 
     return result
 

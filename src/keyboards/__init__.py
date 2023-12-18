@@ -1,8 +1,11 @@
 from ._menu_kb import menu_kb
 from ._profile_kb import (
     ProfileCallbackFactory,
+    OrdersHistoryCallbackFactory,
+    OrderCallbackFactory,
     create_profile_kb,
-    create_return_profile_kb
+    create_return_profile_kb,
+    create_orders_history_kb
 )
 from ._payment_kb import (
     PaymentCallbackFactory,

@@ -3,7 +3,6 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import InlineKeyboardMarkup
 
 from ._payment_kb import PaymentCallbackFactory
-from src.database import get_categories, get_items_by_category
 
 
 class CatalogCallbackFactory(CallbackData, prefix='catalog'):
@@ -23,9 +22,7 @@ class ItemCallbackFactory(CallbackData, prefix='payment'):
     price: float
 
 
-async def create_categories_kb() -> InlineKeyboardMarkup:
-    categories = await get_categories()
-
+def create_categories_kb(categories: list) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     [
         builder.button(text=category[1], callback_data=CatalogCallbackFactory(action=str(category[0]), page='category'))
@@ -36,9 +33,7 @@ async def create_categories_kb() -> InlineKeyboardMarkup:
     return builder.as_markup()
 
 
-async def create_items_kb(category_id: int) -> InlineKeyboardMarkup:
-    items = await get_items_by_category(category_id)
-
+def create_items_kb(items: list) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     [
         builder.button(text=item[1], callback_data=ItemsCallbackFactory(action='show', id=item[0]))

@@ -3,7 +3,6 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import InlineKeyboardMarkup
 
 from ._profile_kb import ProfileCallbackFactory
-from src.utils.crypto_pay import get_crypto_rates
 
 
 class PaymentCallbackFactory(CallbackData, prefix='payment'):
@@ -42,9 +41,7 @@ def create_refill_methods_kb() -> InlineKeyboardMarkup:
     return builder.as_markup()
 
 
-async def create_rates_kb(deposit: int) -> InlineKeyboardMarkup:
-    rates = await get_crypto_rates(deposit)
-
+def create_rates_kb(rates: dict) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     [
         builder.button(

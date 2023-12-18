@@ -1,10 +1,10 @@
-from sqlalchemy import func
-
 from aiogram import Router, types
+
+from sqlalchemy import func
 
 from src.utils import messages as msg
 from src.utils.formatters import format_item, format_buying_item, format_succeed_purchase, format_cancelled_purchase
-from src.database import get_user, get_item_by_id, add_order, update_user_balance
+from src.database import get_user, get_item_by_id, add_order, update_user_balance, get_categories, get_items_by_category
 from src.keyboards import (
     CatalogCallbackFactory,
     ItemsCallbackFactory,
@@ -23,11 +23,13 @@ router = Router()
 @router.callback_query(CatalogCallbackFactory.filter())
 async def callback_catalog(callback: types.CallbackQuery, callback_data: CatalogCallbackFactory):
     if callback_data.page == 'catalog':
-        categories_kb = await create_categories_kb()
+        categories = await get_categories()
+        categories_kb = create_categories_kb(categories)
         await callback.message.edit_text(text=msg.catalog_msg, reply_markup=categories_kb)
 
     if callback_data.page == 'category':
-        items_kb = await create_items_kb(int(callback_data.action))
+        items = await get_items_by_category(int(callback_data.action))
+        items_kb = create_items_kb(items)
         await callback.message.edit_text(text=msg.items_msg, reply_markup=items_kb)
 
 

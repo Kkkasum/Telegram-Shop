@@ -9,7 +9,7 @@ from loguru import logger
 
 from src.utils import messages as msg
 from src.utils.formatters import format_crypto_invoice, format_succeed_payment
-from src.utils.crypto_pay import create_invoice as create_crypto_invoice, check_invoice as check_crypto_invoice
+from src.utils.crypto_pay import get_crypto_rates, create_invoice as create_crypto_invoice, check_invoice as check_crypto_invoice
 from src.common import bot, config
 from src.states import PaymentStates
 from src.database import add_order, update_user_balance, get_user_balance
@@ -89,7 +89,8 @@ async def successful_payment(message: types.Message):
 async def pay_with_crypto(message: types.Message, state: FSMContext):
     if message.text.isdigit():
         deposit = int(message.text)
-        rates_kb = await create_rates_kb(deposit)
+        rates = await get_crypto_rates(deposit)
+        rates_kb = await create_rates_kb(rates)
 
         await message.answer(text=msg.asset_pay_msg, reply_markup=rates_kb)
         await state.clear()
