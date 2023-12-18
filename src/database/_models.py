@@ -16,7 +16,6 @@ class User(Base):
     balance: Mapped[float | None] = mapped_column(Float)
 
 
-
 class Item(Base):
     __tablename__ = 'items'
 
