@@ -14,7 +14,7 @@ def format_profile(username: str, user_id: int, registration_date: datetime, bal
     profile_msg = f"👤 <b>Логин:</b> @{username}\n" \
                   f"🔑 <b>ID:</b> {user_id}\n" \
                   f"🕑 <b>Регистрация:</b> {registration_date.strftime('%d/%m/%Y')}\n\n" \
-                  f"💲 <b>Баланс:</b> {balance}"
+                  f"💲 <b>Баланс:</b> {balance:.1f}"
 
     return profile_msg
 
@@ -29,13 +29,13 @@ def format_order(order_id: int, item_name: str, order_date: datetime) -> str:
 
 def format_crypto_invoice(invoice_url: str) -> str:
     crypto_invoice_msg = f'Для пополнения баланса перейдите по <a href="{invoice_url}">ссылке</a>\n'\
-                         f'После оплаты нажмите на <b>Проверить оплату</b>'
+                         f'После оплаты нажмите на кнопку <b>Проверить оплату</b>'
 
     return crypto_invoice_msg
 
 
 def format_succeed_payment(deposit: float, currency: str = 'RUB') -> str:
-    successful_payment_msg = f"✅ Пополнение на сумму {deposit} {currency} прошло успешно"
+    successful_payment_msg = f"✅ Пополнение на сумму {deposit:.4f} {currency} прошло успешно"
 
     return successful_payment_msg
 

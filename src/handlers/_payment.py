@@ -106,8 +106,13 @@ async def pay_with_crypto(message: types.Message, state: FSMContext) -> None:
 async def crypto_assets(callback: types.CallbackQuery, callback_data: AssetCallbackFactory) -> None:
     if callback_data.action == 'invoice':
         invoice = await create_crypto_invoice(callback_data.asset, callback_data.deposit)
-        crypto_invoice_kb = create_crypto_invoice_kb(invoice.bot_invoice_url, invoice.invoice_id, callback_data.deposit)
         m = format_crypto_invoice(invoice.bot_invoice_url)
+        crypto_invoice_kb = create_crypto_invoice_kb(
+            invoice.bot_invoice_url,
+            invoice.invoice_id,
+            callback_data.deposit,
+            callback_data.asset
+        )
 
         await callback.message.edit_text(text=m, reply_markup=crypto_invoice_kb)
 
@@ -117,7 +122,7 @@ async def crypto_invoice(callback: types.CallbackQuery, callback_data: InvoiceCa
     if await check_crypto_invoice(callback_data.invoice_id):
         user_balance = await get_user_balance(callback.from_user.id)
         user_balance += callback_data.deposit
-        m = format_succeed_payment(callback_data.deposit)
+        m = format_succeed_payment(callback_data.deposit, callback_data.asset)
 
         await callback.message.answer(text=m)
         await add_order({

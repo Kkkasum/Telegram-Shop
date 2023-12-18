@@ -20,6 +20,7 @@ class InvoiceCallbackFactory(CallbackData, prefix='invoice'):
     action: str
     invoice_id: int
     deposit: float
+    asset: str
 
 
 def create_refill_methods_kb() -> InlineKeyboardMarkup:
@@ -59,7 +60,7 @@ def create_rates_kb(rates: dict) -> InlineKeyboardMarkup:
     return builder.as_markup()
 
 
-def create_crypto_invoice_kb(invoice_url: str, invoice_id: int, deposit: float) -> InlineKeyboardMarkup:
+def create_crypto_invoice_kb(invoice_url: str, invoice_id: int, deposit: float, asset: str) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     builder.button(
         text='Оплатить',
@@ -67,7 +68,7 @@ def create_crypto_invoice_kb(invoice_url: str, invoice_id: int, deposit: float) 
     )
     builder.button(
         text='Проверить оплату',
-        callback_data=InvoiceCallbackFactory(action='check', invoice_id=invoice_id, deposit=deposit)
+        callback_data=InvoiceCallbackFactory(action='check', invoice_id=invoice_id, deposit=deposit, asset=asset)
     )
     builder.adjust(1)
 
