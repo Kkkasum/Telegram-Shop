@@ -33,11 +33,11 @@ router = Router()
 @router.callback_query(PaymentCallbackFactory.filter())
 async def callback_payment(callback: types.CallbackQuery, callback_data: PaymentCallbackFactory, state: FSMContext):
     if callback_data.page == 'card_payment':
-        await callback.message.edit_text(text=msg.card_payment_msg)
+        await callback.message.edit_text(text=msg.payment_msg)
         await state.set_state(PaymentStates.card)
 
     if callback_data.page == 'crypto_payment':
-        await callback.message.edit_text(text=msg.crypto_payment_msg)
+        await callback.message.edit_text(text=msg.payment_msg)
         await state.set_state(PaymentStates.crypto)
 
 
@@ -94,7 +94,7 @@ async def pay_with_crypto(message: types.Message, state: FSMContext):
     if message.text.isdigit():
         deposit = int(message.text)
         rates = await get_crypto_rates(deposit)
-        rates_kb = await create_rates_kb(rates)
+        rates_kb = create_rates_kb(rates)
 
         await message.answer(text=msg.asset_pay_msg, reply_markup=rates_kb)
         await state.clear()

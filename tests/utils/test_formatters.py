@@ -6,6 +6,7 @@ from src.utils.formatters import (
     format_succeed_payment,
     format_item,
     format_buying_item,
+    format_order,
     format_crypto_invoice,
     format_succeed_purchase,
     format_cancelled_purchase
@@ -33,7 +34,7 @@ def test_format_profile() -> None:
 
     assert res == "👤 <b>Логин:</b> @User\n" \
                   "🔑 <b>ID:</b> 1\n" \
-                  "🕑 <b>Регистрация:</b> 2023-01-01 00:00:00\n\n" \
+                  "🕑 <b>Регистрация:</b> 01/01/2023\n\n" \
                   "💲 <b>Баланс:</b> 0"
 
 
@@ -68,6 +69,19 @@ def test_format_buying_item() -> None:
     assert res == "<b>Вы действительно хотите купить этот товар?</b>\n\n" \
                   "<b>🛒 Товар</b>: Item\n" \
                   "<b>💰 Сумма к оплате:</b> 100"
+
+
+def test_format_order() -> None:
+    res = format_order(
+        order_id=1,
+        item_name='Item',
+        order_date=datetime(day=1, month=1, year=2023)
+    )
+
+    assert res == f"Номер заказа: 1\n"\
+                  f"Товар: Item\n"\
+                  f"Дата покупки: 01/01/2023"\
+
 
 
 def test_format_crypto_invoice() -> None:
