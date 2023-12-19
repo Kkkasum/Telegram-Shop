@@ -19,7 +19,7 @@ router = Router()
 
 
 @router.callback_query(CatalogCallbackFactory.filter())
-async def callback_catalog(callback: types.CallbackQuery, callback_data: CatalogCallbackFactory) -> None:
+async def callback_catalog(callback: types.CallbackQuery, callback_data: CatalogCallbackFactory):
     if callback_data.page == 'catalog':
         categories = await get_categories()
         categories_kb = create_categories_kb(categories)
@@ -32,7 +32,7 @@ async def callback_catalog(callback: types.CallbackQuery, callback_data: Catalog
 
 
 @router.callback_query(ItemsCallbackFactory.filter())
-async def callback_items(callback: types.CallbackQuery, callback_data: ItemsCallbackFactory) -> None:
+async def callback_items(callback: types.CallbackQuery, callback_data: ItemsCallbackFactory):
     item = await get_item_by_id(int(callback_data.id))
     buy_kb = create_buy_kb(item['item_name'], item['price'])
     m = format_item(item['item_name'], item['price'], item['description'])
@@ -41,7 +41,7 @@ async def callback_items(callback: types.CallbackQuery, callback_data: ItemsCall
 
 
 @router.callback_query(ItemCallbackFactory.filter())
-async def callback_item(callback: types.CallbackQuery, callback_data: ItemCallbackFactory) -> None:
+async def callback_item(callback: types.CallbackQuery, callback_data: ItemCallbackFactory):
     if callback_data.page == 'buy_item':
         purchase_kb = create_purchase_kb(callback_data.item_name, callback_data.price)
         m = format_buying_item(callback_data.item_name, callback_data.price)

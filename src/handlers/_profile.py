@@ -18,11 +18,7 @@ router = Router()
 
 
 @router.callback_query(ProfileCallbackFactory.filter())
-async def callback_profile(
-        callback: types.CallbackQuery,
-        callback_data: ProfileCallbackFactory,
-        state: FSMContext
-) -> None:
+async def callback_profile(callback: types.CallbackQuery, callback_data: ProfileCallbackFactory, state: FSMContext):
     if callback_data.page == 'profile':
         await state.clear()
         user = await get_user(callback.from_user.id)
@@ -41,7 +37,7 @@ async def callback_profile(
 
 
 @router.callback_query(OrdersHistoryCallbackFactory.filter())
-async def callback_orders_history(callback: types.CallbackQuery, callback_data: OrdersHistoryCallbackFactory) -> None:
+async def callback_orders_history(callback: types.CallbackQuery, callback_data: OrdersHistoryCallbackFactory):
     orders_ids = await get_user_orders_ids(user_id=callback.from_user.id)
 
     if not orders_ids:
@@ -56,7 +52,7 @@ async def callback_orders_history(callback: types.CallbackQuery, callback_data: 
 
 
 @router.callback_query(OrderCallbackFactory.filter())
-async def callback_order(callback: types.CallbackQuery, callback_data: OrderCallbackFactory) -> None:
+async def callback_order(callback: types.CallbackQuery, callback_data: OrderCallbackFactory):
     if callback_data.action == 'show':
         order = await get_order_by_id(callback_data.order_id)
         m = format_order(callback_data.order_id, order['item_name'], order['order_date'])
