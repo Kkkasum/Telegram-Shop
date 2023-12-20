@@ -10,7 +10,7 @@ router = Router()
 
 
 @router.message(CommandStart())
-async def start(message: types.Message) -> None:
+async def start(message: types.Message):
     m = format_start(message.from_user.username)
 
     await add_user({'id': message.from_user.id, 'username': message.from_user.username})
@@ -19,7 +19,7 @@ async def start(message: types.Message) -> None:
 
 @router.message(Command('profile'))
 @router.message(F.text.casefold() == 'профиль')
-async def profile(message: types.Message) -> None:
+async def profile(message: types.Message):
     profile_kb = create_profile_kb()
     user = await get_user(message.from_user.id)
     m = format_profile(message.from_user.username, message.from_user.id, user['registration_date'], user['balance'])
@@ -29,13 +29,13 @@ async def profile(message: types.Message) -> None:
 
 @router.message(Command('help'))
 @router.message(F.text.casefold() == 'помощь')
-async def rules(message: types.Message) -> None:
+async def rules(message: types.Message):
     await message.answer(text=msg.rules_msg, reply_markup=menu_kb)
 
 
 @router.message(Command('catalog'))
 @router.message(F.text.casefold() == 'каталог')
-async def catalog(message: types.Message) -> None:
+async def catalog(message: types.Message):
     categories = await get_categories()
     categories_kb = create_categories_kb(categories)
 
