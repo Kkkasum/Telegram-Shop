@@ -3,7 +3,7 @@ from typing import Callable
 import loguru
 from loguru import logger
 
-from ..constants import LOGS_DIR
+from ._constants import LOGS_DIR
 
 
 class Filters:
