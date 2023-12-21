@@ -1,4 +1,4 @@
-# Bot for telegram shop
+# Telegram Shop
 
 ## Run bot
 
