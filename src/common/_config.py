@@ -1,6 +1,6 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from ..constants import BASE_DIR
+from ._constants import BASE_DIR
 
 
 class Config(BaseSettings):
