@@ -35,7 +35,7 @@ def format_crypto_invoice(invoice_url: str) -> str:
 
 
 def format_succeed_payment(deposit: float, currency: str = 'RUB') -> str:
-    successful_payment_msg = f"✅ Пополнение на сумму {deposit:.4f} {currency} прошло успешно"
+    successful_payment_msg = f"✅ Пополнение на сумму {deposit:.2f} {currency} прошло успешно"
 
     return successful_payment_msg
 
